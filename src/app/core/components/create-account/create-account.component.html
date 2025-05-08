@@ -1,0 +1,61 @@
+@if(signUpForm){
+<div class="content">
+  <div class="container">
+    <div class="form-container">
+      <h2>Sign up</h2>
+      <button class="google-signup-button" (click)="signUpWithGoogle()">
+        <div class="google-icon-wrapper">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+        </div>
+        <span>Sign up with Google</span>
+      </button>
+      <p class="or-content">OR</p>
+      <form [formGroup]="signUpForm">
+        <mat-form-field appearance="outline" style="margin-bottom: 15px;">
+          <mat-label>Your Name</mat-label>
+          <input matInput placeholder="Enter your name" name="name" formControlName="name">
+          <mat-icon matSuffix>person</mat-icon>
+          @if(signUpForm.get('name')?.hasError('required') && signUpForm.get('name')?.touched){
+          <mat-error>Name is required</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-bottom: 15px;">
+          <mat-label>Your Email</mat-label>
+          <input matInput placeholder="Enter your email" name="email" type="email" formControlName="email">
+          <mat-icon matSuffix>email</mat-icon>
+          @if(signUpForm.get('email')?.hasError('required') && signUpForm.get('email')?.touched){
+          <mat-error>Email address is required</mat-error>
+          }
+          @if(signUpForm.get('email')?.hasError('pattern')){
+          <mat-error>Invalid email address.</mat-error>
+          }
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-bottom: 15px;">
+          <mat-label>Password</mat-label>
+          <input matInput placeholder="Enter your password" type="password" formControlName="password" />
+          <mat-icon matSuffix>lock</mat-icon>
+          @if(signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched){
+          <mat-error>Password is required</mat-error>
+          }
+        </mat-form-field>
+        <!-- <a class="learn-more-text">Learn More</a> -->
+        <button (click)="signUp()" class="register-btn">
+          @if (!loading) {
+          REGISTER
+          } @else {
+          <div class="loader"></div>
+          }
+        </button>
+      </form>
+    </div>
+    <div class="illustration">
+      <img src="assets/signup-image.jpg" alt="Illustration">
+      <div class="member-link">
+        <a href="#">I am already member</a>
+      </div>
+    </div>
+  </div>
+</div>
+}
+
+<app-snack-bar #snackRef></app-snack-bar>

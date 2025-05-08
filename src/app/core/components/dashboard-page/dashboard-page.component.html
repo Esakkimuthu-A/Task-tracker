@@ -1,0 +1,188 @@
+<app-skeleton-loader *ngIf="isLoading"></app-skeleton-loader>
+
+@if(mobileView){
+  <div class="landscape-container">
+    <p class="landscape-alignment">This page is best advised to be viewed in desktop </p>
+  </div>
+}
+
+<div class="content" *ngIf="!isLoading">
+  <!-- Navbar -->
+  <div class="navbar">
+    <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
+    <div class="user-profile-details">
+      <img [matMenuTriggerFor]="menu" src="assets/user-avatar.jpg" alt="User Avatar" class="profile-pic"
+        (click)="toggleProfileMenu()" />
+      <button class="add-task-btn" (click)="openDialog()">Add Task</button>
+    </div>
+    <mat-menu #menu="matMenu">
+      <div class="user-info">
+        <mat-icon class="profile-icon">account_circle</mat-icon>
+        <div>
+          <div class="user-name">{{name}}</div>
+          <div class="user-email">{{email}}</div>
+        </div>
+      </div>
+      <hr />
+      <button mat-menu-item>
+        <mat-icon>settings</mat-icon> Settings
+      </button>
+      <button (click)="logout()" mat-menu-item class="logout-btn">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
+  </div>
+  <!-- Tasks -->
+  <div class="display-task">
+    <div class="task-status" id="taskStatus" *ngFor="let details of heading" (drop)="drop($event, details.status)"
+      (dragover)="allowDrop($event)" [ngStyle]="{
+          'border-top': '4px solid ' + details.border_color,
+          'max-width': collapsedStatus[details.status] ? '30px' : '400px',
+          'padding': collapsedStatus[details.status] ? '10px 2px' : '10px'
+        }" [ngClass]="{ 'task-expanded': collapsedStatus[details.status] }">
+      <!-- Task Heading -->
+      <div class="task-status-heading">
+        <div class="collapse-design" [ngStyle]="{'display':collapsedStatus[details.status] ? 'flow' : 'flex'}">
+          <mat-icon id="toggleBtn" (click)="toggleCollapse(details.status)">keyboard_arrow_down</mat-icon>
+          <p class="task-status-heading-text" *ngIf="!collapsedStatus[details.status]">
+            {{ details.title }}
+          </p>
+          <div class="vertical-text" *ngIf="collapsedStatus[details.status]">
+            <span *ngFor="let char of details.title.split('')" class="task-status-collapse-heading-text">{{char}}</span>
+          </div>
+        </div>
+        <div class="task-count-details" *ngIf="!collapsedStatus[details.status]">
+          <mat-icon>checklist</mat-icon>
+          <span class="task-count">{{ getTaskCountByStatus(details.status) }}</span>
+        </div>
+      </div>
+      <!-- Task Content -->
+      <ng-container *ngIf="!collapsedStatus[details.status]">
+        <div *ngIf="getTasks(details.status).length > 0; else noTasks" class="task-details-main-container">
+          <div *ngFor="let tasks of getTasks(details.status)" [attr.draggable]="true" (dragstart)="drag($event, tasks)">
+            <div class="task-details">
+              <p class="task-heading">{{tasks.task}}</p>
+              <p class="task-description">{{tasks.description}}</p>
+              <div class="label-container" *ngIf="tasks.selectedLabels.length">
+                <span *ngFor="let label of tasks.selectedLabels"
+                  [ngStyle]="{'background-color': label.backgroundColor,'color':label.color}" class="label-chip">
+                  {{ label.name }}
+                </span>
+              </div>
+              <div class="user-task-details">
+                <div class="task-date">
+                  <div class="start-date" [ngClass]="{'start-date-color':isEndDateToday(tasks.startDate)}">
+                    <mat-icon>event</mat-icon>
+                    <p>{{tasks.startDate | date:'dd/MM/yy'}}</p>
+                  </div>
+                  <div class="end-date" [ngClass]="{'end-date-color':isEndDateToday(tasks.endDate)}">
+                    <mat-icon>event</mat-icon>
+                    <p>{{tasks.endDate | date:'dd/MM/yy'}}</p>
+                  </div>
+                </div>
+                <div class="content-align" style="gap:2px;">
+                  <div class="move-task" *ngIf="tasks.status ==='open'">
+                    <mat-icon (click)="moveTaskDialog(tasks.id)">add</mat-icon>
+                  </div>
+                  <img src="assets/img.jpg" class="user-image">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+  @defer{
+    <app-footer></app-footer>
+  }
+</div>
+
+<ng-template #taskDialog>
+  @if(addTaskForm){
+  <div class="dialog-container" [formGroup]="addTaskForm">
+    <h2 class="add-task-heading">Add New Task</h2>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Enter Task</mat-label>
+      <input matInput type="text" formControlName="task" />
+      @if(addTaskForm.get('task')?.hasError('required') && addTaskForm.get('task')?.touched){
+      <mat-error>This field is required.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Enter Description</mat-label>
+      <textarea matInput rows="3" formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Start Date</mat-label>
+      <input matInput [matDatepicker]="startPicker" [matDatepickerFilter]="startDateFilter" formControlName="startDate" />
+      <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+      <mat-datepicker #startPicker></mat-datepicker>
+      @if(addTaskForm.get('startDate')?.hasError('required')){
+      <mat-error>This field is required.</mat-error>
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Last Date</mat-label>
+      <input 
+        matInput 
+        [matDatepicker]="endPicker" 
+        formControlName="endDate"
+        [matDatepickerFilter]="getEndDateFilter"
+      />
+      <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+      <mat-datepicker #endPicker></mat-datepicker>
+      @if(addTaskForm.get('endDate')?.hasError('required')){
+        <mat-error>This field is required.</mat-error>
+      }
+    </mat-form-field>
+    <div class="full-width" class="labal-select">
+      <mat-form-field appearance="outline" style="min-width: 80%;">
+        <mat-label>Select a Label</mat-label>
+        <mat-select id="labelSelect" formControlName="selectedLabels">
+          @for (label of labels; track label) {
+          <mat-option [value]="label.value">{{ label.name }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+      <button style="min-width: 20%;" class="dialog-btn label-add" (click)="addLabel()">Add</button>
+    </div>
+    <div class="label-container">
+      @for (label of addedLabels; track label.value) {
+      <div class="label" [ngStyle]="{'color': label?.color, 'background-color':label?.backgroundColor}">
+        {{ label.name }}
+        <mat-icon (click)="removeLabel(label)" [ngStyle]="{'color': label?.color}">close &times;</mat-icon>
+      </div>
+      }
+    </div>
+    <div class="dialog-actions">
+      <button class="cancel-btn dialog-btn" (click)="closeDialog()">Close</button>
+      <button class="save-btn dialog-btn" color="primary" (click)="saveTask()">Save</button>
+    </div>
+  </div>
+  }
+</ng-template>
+
+<ng-template #noTasks>
+  <div class="no-tasks-container">
+    <div class="icon-box">🗂️</div>
+    <h2>No Tasks Found</h2>
+    <p>You're all caught up for now.</p>
+    <a (click)="openDialog()" class="add-task-link">Add Task</a>
+  </div>
+</ng-template>
+
+<ng-template #moveTasks>
+  <div class="container">
+    <p>This dialog shows the current status of the task. You can switch between 'In Progress' and 'Completed'.</p>
+    <div style="display: flex;">
+      <div *ngFor="let details of heading">
+        <div *ngIf="details.title !== 'Open'" >
+          <button class="status-btn" [ngStyle]="{backgroundColor:details.border_color,color:details.color }" (click)="moveContent(details?.status)">{{details.title}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<app-snack-bar #snackRef></app-snack-bar>

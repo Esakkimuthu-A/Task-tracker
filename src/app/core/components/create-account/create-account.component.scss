@@ -1,0 +1,187 @@
+.content {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background-color: #ffffff;
+  align-items: center;
+  justify-content: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  // width: 90%;
+  // max-width: 800px;
+  max-width: 805px;
+  height: 575px;
+}
+
+.form-container {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-container h2 {
+  margin: 0 0 20px;
+  font-size: 28px;
+  font-weight: bold;
+  text-align: center;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+// ::ng-deep .mat-mdc-form-field{
+//   flex-direction: column-reverse !important;
+// }
+
+.register-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 8px;
+  background-color: #4facfe;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.register-btn:hover {
+  background-color: #00f2fe;
+  cursor: pointer;
+}
+
+.member-link {
+  text-align: right;
+  margin-top: 10px;
+}
+
+.member-link a {
+  color: #666;
+  text-decoration: none;
+}
+
+.illustration {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  flex-direction: column;
+}
+
+.illustration img {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .illustration {
+    padding: 10px;
+  }
+
+  .form-container {
+    padding: 20px;
+  }
+}
+
+// loader
+
+.loader {
+  width: 25px;
+  height: 25px;
+  --b: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, white) content-box;
+  -webkit-mask:
+    repeating-conic-gradient(#0000 0deg, #000 1deg 20deg, #0000 21deg 36deg),
+    radial-gradient(farthest-side, #0000 calc(100% - var(--b) - 1px), #000 calc(100% - var(--b)));
+  -webkit-mask-composite: destination-in;
+  mask-composite: intersect;
+  animation: l4 1s infinite steps(10);
+}
+
+@keyframes l4 {
+  to {
+    transform: rotate(1turn)
+  }
+}
+
+// .learn-more-text{
+//   color: var(--primary-color);
+//   margin-bottom: 5px;
+//   cursor: pointer;
+//   font-size: 15px;
+// }
+
+.google-signup-button {
+  display: flex;
+  align-items: center;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 0;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .google-icon-wrapper {
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid #ccc;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    padding: 10px 20px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  &:active {
+    background-color: #2a56c6;
+  }
+}
+
+
+.or-content{
+  font-weight: 500;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

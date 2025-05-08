@@ -1,0 +1,68 @@
+/* Base */
+#snackbar {
+  visibility: hidden;
+  min-width: 260px;
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 16px;
+  position: fixed;
+  z-index: 10000;
+  left: 30px;
+  bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(30px);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  z-index: 10000;
+}
+
+/* Animation trigger */
+#snackbar.show {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Icon styles by type */
+
+.success .icon {
+  color: #2e7d32; /* green */
+}
+.warning .icon {
+  color: #f9a825; /* amber */
+}
+.error .icon {
+  color: #d32f2f; /* red */
+}
+.info .icon {
+  color: #1976d2; /* blue */
+}
+
+// #snackbar.success {
+//   background-color: #e8f5e9;
+//   border-left: 4px solid #2e7d32;
+//   color: #2e7d32;
+// }
+
+.icon {
+  font-size: 20px;
+}
+
+.text {
+  flex: 1;
+  font-size: 15px;
+}
+
+.close-btn {
+  font-size: 18px;
+  color: #2e2e2e;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}

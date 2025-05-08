@@ -1,0 +1,17 @@
+<div class="skeleton-wrapper">
+
+  <!-- Navbar -->
+  <div class="skeleton-navbar">
+    <div class="skeleton-logo"></div>
+    <div class="skeleton-profile"></div>
+  </div>
+
+  <!-- Kanban Columns -->
+  <div class="skeleton-board">
+    <div class="skeleton-column" *ngFor="let col of [1, 2, 3]">
+      <div class="skeleton-column-title"></div>
+      <div class="skeleton-card" *ngFor="let task of [1, 2, 3]"></div>
+    </div>
+  </div>
+
+</div>

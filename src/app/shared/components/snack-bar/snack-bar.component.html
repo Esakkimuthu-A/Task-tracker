@@ -1,0 +1,5 @@
+<div id="snackbar" [class.show]="show" [ngClass]="type">
+  <mat-icon class="icon">{{ icon }}</mat-icon>
+  <span class="text">{{ message }}</span>
+  <mat-icon class="close-btn" (click)="close()">close</mat-icon>
+</div>
