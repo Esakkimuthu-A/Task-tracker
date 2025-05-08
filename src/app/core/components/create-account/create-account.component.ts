@@ -24,6 +24,7 @@ export class CreateAccountComponent {
   @ViewChild('snackRef') snackBar!: SnackBarComponent;
   signUpForm !: FormGroup;
   loading: boolean = false;
+  hidePassword:boolean= true;
   constructor(private sharedService: SharedService) { }
 
   ngOnInit() {

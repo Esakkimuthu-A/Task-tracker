@@ -19,6 +19,7 @@ import { SharedService } from '../../../shared/services/shared.service';
 export class LoginComponent {
   @ViewChild('snackRef') snackBar!: SnackBarComponent;
   loading: boolean = false;
+  hidePassword:boolean= true;
 
   signInForm !: FormGroup;
 

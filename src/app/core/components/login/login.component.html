@@ -17,9 +17,20 @@
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput type="password" placeholder="Enter your password" formControlName="password" />
-        <mat-icon matSuffix>lock</mat-icon>
-        @if(signInForm.get('password')?.hasError('required') && signInForm.get('password')?.touched){
+        <input matInput
+               [type]="hidePassword ? 'password' : 'text'"
+               placeholder="Enter your password"
+               formControlName="password" />
+      
+        <button class="password-button" mat-icon-button
+                matSuffix
+                type="button"
+                (click)="hidePassword = !hidePassword"
+                aria-label="Toggle password visibility">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+      
+        @if (signInForm.get('password')?.hasError('required') && signInForm.get('password')?.touched) {
           <mat-error>Password is required</mat-error>
         }
       </mat-form-field>

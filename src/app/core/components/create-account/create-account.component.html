@@ -30,12 +30,41 @@
           <mat-error>Invalid email address.</mat-error>
           }
         </mat-form-field>
+        <!-- <mat-form-field appearance="outline" style="margin-bottom: 15px;">
+          <mat-label>Password</mat-label>
+          <input matInput
+                 [type]="hidePassword ? 'password' : 'text'"
+                 placeholder="Enter your password"
+                 formControlName="password" />
+          
+          <button class="password-button" mat-icon-button
+                  matSuffix
+                  type="button"
+                  (click)="hidePassword = !hidePassword"
+                  [attr.aria-label]="'Toggle password visibility'"
+                  [attr.aria-pressed]="!hidePassword">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+        
+          @if (signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
+          }
+        </mat-form-field> -->
         <mat-form-field appearance="outline" style="margin-bottom: 15px;">
           <mat-label>Password</mat-label>
-          <input matInput placeholder="Enter your password" type="password" formControlName="password" />
-          <mat-icon matSuffix>lock</mat-icon>
-          @if(signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched){
-          <mat-error>Password is required</mat-error>
+          <input matInput
+                 [type]="hidePassword ? 'password' : 'text'"
+                 placeholder="Enter your password"
+                 formControlName="password" />
+          <button class="password-button" mat-icon-button
+                  matSuffix
+                  type="button"
+                  (click)="hidePassword = !hidePassword"
+                  aria-label="Toggle password visibility">
+            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
+          @if (signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched) {
+            <mat-error>Password is required</mat-error>
           }
         </mat-form-field>
         <!-- <a class="learn-more-text">Learn More</a> -->
