@@ -62,6 +62,7 @@ export class DashboardPageComponent {
   isLoading: boolean = true;
   email: string = '';
   name: string = '';
+  addTaskAnimation: boolean=false;
   minStartDate = new Date();
   collapsedStatus: { [status: string]: boolean } = {};
   taskCount: { [key: string]: number } = {};
@@ -69,7 +70,6 @@ export class DashboardPageComponent {
   constructor(private dialog: MatDialog, private router: Router, private sharedService: SharedService, @Inject(PLATFORM_ID) private platformId: object,) { }
 
   ngOnInit() {
-    this.isLoading = false;
     this.formDeclaration();
     this.heading.forEach(item => {
       this.collapsedStatus[item.status] = false;
@@ -100,11 +100,13 @@ export class DashboardPageComponent {
       this.isLoading = true;
       const task = await this.sharedService.getUserTasks();
       if (task?.data?.length) {
+        this.addTaskAnimation=false;
         this.tasks = [...task.data].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         this.isLoading = false;
       }
       else {
         console.log("Please add your task");
+        this.addTaskAnimation=true;
         this.isLoading = false;
       }
     } catch (err) {

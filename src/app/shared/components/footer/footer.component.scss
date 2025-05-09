@@ -5,8 +5,9 @@
   background-color: #232324;
   color: white;
   padding: 20px;
-  font-family: Arial, sans-serif;
-  position: relative; // 👈 ADD THIS LINE
+  // font-family: Arial, sans-serif;
+  font-family: var(--main-font-family);
+  position: relative; 
   overflow: hidden;  
 }
 
