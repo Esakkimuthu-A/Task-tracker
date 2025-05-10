@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { MatPseudoCheckboxModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -8,6 +8,7 @@ import { SharedService } from '../../../shared/services/shared.service';
 import { SnackBarComponent } from '../../../shared/components/snack-bar/snack-bar.component';
 import { CommonModule } from '@angular/common';
 import { VALIDATORS } from '../../constants/to-do-list.constant';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-create-account',
@@ -22,10 +23,12 @@ import { VALIDATORS } from '../../constants/to-do-list.constant';
 })
 export class CreateAccountComponent {
   @ViewChild('snackRef') snackBar!: SnackBarComponent;
+  @ViewChild('learnMoreDialog') learnMoreDialog!: TemplateRef<any>;
+  dialogRef !: MatDialogRef<any>
   signUpForm !: FormGroup;
   loading: boolean = false;
   hidePassword:boolean= true;
-  constructor(private sharedService: SharedService) { }
+  constructor(private sharedService: SharedService,private dialog:MatDialog) { }
 
   ngOnInit() {
     this.signUpForm = new FormGroup({
@@ -62,5 +65,16 @@ export class CreateAccountComponent {
   signUpWithGoogle() {
     console.log("click sign with google");
     // this.sharedService.signUpWithGoogle();
+  }
+
+  toggleInfo(){
+    this.dialogRef= this.dialog.open(this.learnMoreDialog,{
+      width: '400px',
+      maxHeight: '80vh'
+    });
+  }
+
+   closeDialog() {
+    this.dialogRef.close();
   }
 }

@@ -30,27 +30,7 @@
           <mat-error>Invalid email address.</mat-error>
           }
         </mat-form-field>
-        <!-- <mat-form-field appearance="outline" style="margin-bottom: 15px;">
-          <mat-label>Password</mat-label>
-          <input matInput
-                 [type]="hidePassword ? 'password' : 'text'"
-                 placeholder="Enter your password"
-                 formControlName="password" />
-          
-          <button class="password-button" mat-icon-button
-                  matSuffix
-                  type="button"
-                  (click)="hidePassword = !hidePassword"
-                  [attr.aria-label]="'Toggle password visibility'"
-                  [attr.aria-pressed]="!hidePassword">
-            <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-          </button>
-        
-          @if (signUpForm.get('password')?.hasError('required') && signUpForm.get('password')?.touched) {
-            <mat-error>Password is required</mat-error>
-          }
-        </mat-form-field> -->
-        <mat-form-field appearance="outline" style="margin-bottom: 15px;">
+        <mat-form-field appearance="outline" style="margin-bottom: 0px;">
           <mat-label>Password</mat-label>
           <input matInput
                  [type]="hidePassword ? 'password' : 'text'"
@@ -67,7 +47,7 @@
             <mat-error>Password is required</mat-error>
           }
         </mat-form-field>
-        <!-- <a class="learn-more-text">Learn More</a> -->
+        <h1 (click)="toggleInfo()" class="learn-more-text">Not sure what this tracker does?</h1>
         <button (click)="signUp()" class="register-btn">
           @if (!loading) {
           REGISTER
@@ -88,3 +68,23 @@
 }
 
 <app-snack-bar #snackRef></app-snack-bar>
+
+<ng-template #learnMoreDialog>
+ <div class="dialog-content">
+  <div class="dialog-section">
+    <h6>✅ Create and Manage Tasks</h6>
+    <p>Easily add new tasks by entering a title, description, start date, and end date. This helps you clearly define what needs to be done and when.</p>
+  </div>
+  <div class="dialog-section">
+    <h6>📆 Track Progress</h6>
+    <p>Mark tasks as "Open", "In Progress", or "Completed". Visual indicators help you understand your workflow at a glance.</p>
+  </div>
+  <div class="dialog-section">
+    <h6>🧹 Auto-Cleanup Feature</h6>
+    <p>When a task is marked as "Completed", it will be automatically deleted after 30 days to keep your dashboard clean and focused.</p>
+  </div>
+  <div class="dialog-footer">
+    <button class="close-btn" (click)="closeDialog()">Close</button>
+  </div>
+</div>
+</ng-template>

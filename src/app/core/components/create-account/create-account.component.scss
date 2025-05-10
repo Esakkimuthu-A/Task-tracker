@@ -128,12 +128,13 @@ mat-form-field {
   }
 }
 
-// .learn-more-text{
-//   color: var(--primary-color);
-//   margin-bottom: 5px;
-//   cursor: pointer;
-//   font-size: 15px;
-// }
+.learn-more-text{
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
 
 .google-signup-button {
   display: flex;
@@ -193,3 +194,58 @@ mat-form-field {
   margin-right: 8px;
   color:#44474e;
 }
+
+.dialog-content {
+  padding: 16px;
+  font-family: var(--main-font-family);
+  color: black;
+  background-color: white;
+}
+
+.dialog-section {
+  margin-bottom: 20px;
+}
+
+.dialog-section h6 {
+   font-size: 16px;
+   font-weight: 600;
+   margin: 10px 0px;
+   line-height: 1.5;
+   letter-spacing: 0.3px;
+}
+
+.dialog-section p {
+  font-size: 14px;
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+  margin: 0;
+}
+
+.dialog-footer{
+  display: flex;
+  justify-content: end;
+}
+
+.close-btn {
+  background-color: white;
+  color: #f44336;
+  border: 2px solid #f44336;  
+  padding: 10px 15px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.close-btn:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.close-btn:hover {
+  background-color: #d32f2f;
+  color: white;
+  border-color: #d32f2f;
+}
+
