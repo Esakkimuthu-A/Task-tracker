@@ -70,6 +70,7 @@ export class DashboardPageComponent {
   constructor(private dialog: MatDialog, private router: Router, private sharedService: SharedService, @Inject(PLATFORM_ID) private platformId: object,) { }
 
   ngOnInit() {
+    this.addTaskAnimation=false;
     this.formDeclaration();
     this.heading.forEach(item => {
       this.collapsedStatus[item.status] = false;
@@ -130,7 +131,8 @@ export class DashboardPageComponent {
     this.dialogRef = this.dialog.open(this.taskDialog, {
       width: '400px',
       disableClose: true,
-      maxHeight: '80vh'
+      maxHeight: '80vh',
+      panelClass: 'custom-dialog-container'
     });
   }
 
@@ -191,12 +193,17 @@ export class DashboardPageComponent {
     if (task) {
       task.status = status;
       this.updateTaskCounts();
-      this.updateTaskStatus(task);
-      if(status == "completed"){
+      if(status){
+        this.updateTimeStamp(task);
+        this.updateTaskStatus(task);
         // Once you move your task to 'Completed', it will be automatically deleted after 30 days from that date
-        console.log("complete task send mail");
+        // console.log("complete task send mail");
       }
     }
+  }
+
+  async updateTimeStamp(task: any){
+    const data = await this.sharedService.completeTask(task);
   }
 
   async updateTaskStatus(content: any): Promise<void> {

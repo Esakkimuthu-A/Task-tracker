@@ -157,6 +157,35 @@ export class SharedService {
     return { data: tasks, error };
   }
 
+  async completeTask(task: any): Promise<boolean | null> {
+    const updatedTask = {
+      ...task,
+      updatedAt: new Date().toISOString()
+    };
+  
+    if (!this.supabase) {
+      console.error('Supabase updateAt not initialized');
+      return null;
+    }
+  
+    try {
+      const { data, error, status } = await this.supabase
+      .from('task')
+      .update(updatedTask)
+      .eq('id', task.id)
+      .select();
+  
+      if (error) {
+        console.error('Supabase update error:', error);
+        return null;
+      }
+      return true;
+    } catch (error) {
+      console.error('Unexpected error updating task:', error);
+      return null;
+    }
+  }
+
   // async signUpWithGoogle() {
   //   const { data, error } = await this.supabase.auth.signInWithOAuth({
   //     provider: 'google',
