@@ -9,6 +9,7 @@ import { SnackBarComponent } from '../../../shared/components/snack-bar/snack-ba
 import { CommonModule } from '@angular/common';
 import { VALIDATORS } from '../../constants/to-do-list.constant';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-create-account',
@@ -36,6 +37,18 @@ export class CreateAccountComponent {
       email: new FormControl(null, [Validators.required, Validators.pattern(VALIDATORS.emailValidation)]),
       password: new FormControl(null, [Validators.required])
     });
+
+    this.signUpForm.get('email')?.valueChanges
+    .pipe(
+      debounceTime(1000),
+      distinctUntilChanged(),
+      switchMap((email) => this.sharedService.checkIfEmailExists(email))
+    )
+    .subscribe((exists) => {
+     if (exists) {
+       this.snackBar.open('cancel', 'Email already exists', 'error');
+     }
+    });
   }
 
   async signUp() {
@@ -46,7 +59,7 @@ export class CreateAccountComponent {
         const data = await this.sharedService.signUp(email, password, name);
         if (data) {
           this.loading = false;
-          this.snackBar.open('check_circle', 'Account created successfully!', 'success');
+          this.snackBar.open('check_circle', 'Account created successfully!!  Please check your email and click the link to sign in.', 'success',5000);
           this.signUpForm.reset();
         }
       } catch (error: any) {
@@ -63,7 +76,6 @@ export class CreateAccountComponent {
   }
 
   signUpWithGoogle() {
-    console.log("click sign with google");
     // this.sharedService.signUpWithGoogle();
   }
 

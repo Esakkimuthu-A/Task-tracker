@@ -186,19 +186,39 @@ export class SharedService {
     }
   }
 
-  // async signUpWithGoogle() {
-  //   const { data, error } = await this.supabase.auth.signInWithOAuth({
-  //     provider: 'google',
-  //   });
+ async checkIfEmailExists(email: string): Promise<boolean> {
+  if (!this.supabase) {
+    console.error('Supabase not initialized');
+    return false;
+  }
+  const { data, error } = await this.supabase
+    .from('user')
+    .select('id')
+    .eq('email', email)
+    .limit(1);
+  if (error) {
+    console.error('Error checking email:', error);
+    return false;
+  }
+   return data.length > 0;
+ }
 
-  //   console.log(data);
+
+
+  async signUpWithGoogle() {
+    // const { data, error } = await this.supabase.auth.signInWithOAuth({
+    //   provider: 'google',
+    // });
+    // console.log(data);
+
+    // console.log(data);
   
-  //   if (error) {
-  //     console.error('Google Sign-In Error:', error);
-  //   } else {
-  //     console.log('Redirecting to Google...');
-  //     this.router.navigate(['/dashboard']);
-  //   }
-  // }
+    // if (error) {
+    //   console.error('Google Sign-In Error:', error);
+    // } else {
+    //   console.log('Redirecting to Google...');
+    //   this.router.navigate(['/dashboard']);
+    // }
+  }
 
 }
