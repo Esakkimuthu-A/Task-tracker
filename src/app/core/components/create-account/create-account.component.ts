@@ -40,13 +40,19 @@ export class CreateAccountComponent {
 
     this.signUpForm.get('email')?.valueChanges
     .pipe(
-      debounceTime(1000),
+      debounceTime(500),
       distinctUntilChanged(),
       switchMap((email) => this.sharedService.checkIfEmailExists(email))
     )
     .subscribe((exists) => {
+     const emailControl = this.signUpForm.get('email');
      if (exists) {
-       this.snackBar.open('cancel', 'Email already exists', 'error');
+       emailControl?.setErrors({ emailTaken: true });
+     }
+     else{
+      if(emailControl?.hasError('emailTaken')){
+         emailControl.setErrors(null);
+      }
      }
     });
   }

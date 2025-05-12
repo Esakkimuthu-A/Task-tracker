@@ -29,6 +29,9 @@
           @if(signUpForm.get('email')?.hasError('pattern')){
           <mat-error>Invalid email address.</mat-error>
           }
+          @if(signUpForm.get('email')?.hasError('emailTaken')){
+            <mat-error> Email already exists</mat-error>
+          }
         </mat-form-field>
         <mat-form-field appearance="outline" style="margin-bottom: 0px;">
           <mat-label>Password</mat-label>
