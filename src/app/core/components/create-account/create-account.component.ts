@@ -32,6 +32,10 @@ export class CreateAccountComponent {
   constructor(private sharedService: SharedService,private dialog:MatDialog) { }
 
   ngOnInit() {
+    this.formInitial();
+  }
+
+  formInitial(){
     this.signUpForm = new FormGroup({
       name: new FormControl(null, [Validators.required]),
       email: new FormControl(null, [Validators.required, Validators.pattern(VALIDATORS.emailValidation)]),

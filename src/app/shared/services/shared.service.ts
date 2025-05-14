@@ -32,7 +32,7 @@ export class SharedService {
         options: {
           data: { name: options }
         }
-      },);
+      });
       if (error) {
         throw error;
       }
@@ -73,19 +73,6 @@ export class SharedService {
       return data.user;
     } catch (error) {
       console.error('Error getting current user:', error);
-      throw error;
-    }
-  }
-
-  async signOut(): Promise<any> {
-    try {
-      const { error } = await this.supabase.auth.signOut();
-      localStorage.removeItem("$ecret")
-      if (error) {
-        throw error;
-      }
-    } catch (error) {
-      console.error('Error signing out:', error);
       throw error;
     }
   }
@@ -203,22 +190,41 @@ export class SharedService {
    return data.length > 0;
  }
 
-
-
-  async signUpWithGoogle() {
-    // const { data, error } = await this.supabase.auth.signInWithOAuth({
-    //   provider: 'google',
-    // });
-    // console.log(data);
-
-    // console.log(data);
-  
-    // if (error) {
-    //   console.error('Google Sign-In Error:', error);
-    // } else {
-    //   console.log('Redirecting to Google...');
-    //   this.router.navigate(['/dashboard']);
-    // }
+async signOut(): Promise<void> {
+  if (!this.supabase) {
+    throw new Error('Supabase not initialized');
   }
+  try {
+    const { error } = await this.supabase.auth.signOut();
+    localStorage.removeItem("$ecret");
+    if (error) {
+      throw error;
+    }
+  } catch (error) {
+    console.error('Error signing out:', error);
+    throw error;
+  }
+}
+
+
+  // async signUpWithGoogle() {
+  //  if (!this.supabase) {
+  //    console.error('Supabase not initialized');
+  //    return;
+  //  }
+
+  //  const { data, error } = await this.supabase.auth.signInWithOAuth({
+  //    provider: 'google',
+  //  });
+
+  //  if (error) {
+  //    console.error('OAuth sign-in error:', error.message);
+  //    return;
+  //  }
+
+  //  if (data?.url) {
+  //    window.location.href = data.url;
+  //  }
+  // }
 
 }

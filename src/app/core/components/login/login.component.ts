@@ -37,19 +37,11 @@ export class LoginComponent {
     if (this.signInForm.valid) {
       this.loading = true;
       try {
-        const { email, password, rememberMe } = this.signInForm.value;
+        const { email, password } = this.signInForm.value;
         const data = await this.sharedService.signIn(email, password);
         if (data) {
           this.loading = false;
           this.router.navigate(['/dashboard']);
-          const token = data.session?.access_token;
-          if (token) {
-            if (rememberMe) {
-              localStorage.setItem('access_id', JSON.stringify({ email, password }));
-            } else {
-              sessionStorage.setItem('access_id', JSON.stringify({ email, password }));
-            }
-          }
         }
       } catch (error: any) {
         this.loading = false;

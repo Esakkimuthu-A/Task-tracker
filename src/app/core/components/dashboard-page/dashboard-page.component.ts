@@ -15,7 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { HEADING_DETAILS } from '../../constants/to-do-list.constant';
 import { AddLabel, AddTask } from '../../models/to-do-list.model';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { SnackBarComponent } from '../../../shared/components/snack-bar/snack-bar.component';
 import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loader/skeleton-loader.component';
@@ -312,7 +312,8 @@ export class DashboardPageComponent {
     return date ? date >= today : false;
   };
 
-  logout() {
+  async logout() {
+    await this.sharedService.signOut();
     this.router.navigate(['/login']);
   }
 
@@ -327,4 +328,22 @@ export class DashboardPageComponent {
       }
     }
   }
+
+  @HostListener('window:popstate')
+  onPopState() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationStart && event.navigationTrigger === 'popstate') {
+        this.handlePopstateLogout();
+      }
+    });
+  }
+
+  async handlePopstateLogout() {
+    try {
+      await this.sharedService.signOut();
+    } catch (error) {
+      console.error('Error during signOut on popstate:', error);
+    }
+  }
+
 }
