@@ -85,9 +85,15 @@ export class CreateAccountComponent {
     }
   }
 
-  signUpWithGoogle() {
-    // this.sharedService.signUpWithGoogle();
+  async signUpWithGoogle() {
+    const success = await this.sharedService.signUpWithGoogle();
+    if (success) {
+      console.log('Redirected to Google');
+    } else {
+      console.log('Google login failed');
+    }
   }
+
 
   toggleInfo(){
     this.dialogRef= this.dialog.open(this.learnMoreDialog,{

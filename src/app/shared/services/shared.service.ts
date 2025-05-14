@@ -207,24 +207,27 @@ async signOut(): Promise<void> {
 }
 
 
-  // async signUpWithGoogle() {
-  //  if (!this.supabase) {
-  //    console.error('Supabase not initialized');
-  //    return;
-  //  }
+async signUpWithGoogle(): Promise<boolean> {
+  if (!this.supabase) {
+    console.error('Supabase not initialized');
+    return false;
+  }
 
-  //  const { data, error } = await this.supabase.auth.signInWithOAuth({
-  //    provider: 'google',
-  //  });
+  const { data, error } = await this.supabase.auth.signInWithOAuth({
+    provider: 'google',
+  });
 
-  //  if (error) {
-  //    console.error('OAuth sign-in error:', error.message);
-  //    return;
-  //  }
+  if (error) {
+    console.error('OAuth sign-in error:', error.message);
+    return false;
+  }
 
-  //  if (data?.url) {
-  //    window.location.href = data.url;
-  //  }
-  // }
+  if (data?.url) {
+    window.location.href = data.url;
+    return true;
+  }
+
+  return false;
+}
 
 }
