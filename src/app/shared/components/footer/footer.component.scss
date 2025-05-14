@@ -253,3 +253,13 @@ $time-4: 200s;
       0 0 75px #FF1177;
   }
 }
+
+
+@media only screen and (max-width: 780px){
+  .footer .left {
+    max-width: 100%;
+  }
+  .footer .right{
+    max-width: 100%;
+  }
+}

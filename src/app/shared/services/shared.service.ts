@@ -214,7 +214,7 @@ async signUpWithGoogle(): Promise<boolean> {
   }
 
   const { data, error } = await this.supabase.auth.signInWithOAuth({
-    provider: 'google',
+    provider: 'google'
   });
 
   if (error) {
