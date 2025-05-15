@@ -21,6 +21,7 @@ import { SnackBarComponent } from '../../../shared/components/snack-bar/snack-ba
 import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loader/skeleton-loader.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { SharedService } from '../../../shared/services/shared.service';
+import { getInitials } from '../../utilities/user.util';
 @Component({
   selector: 'app-dashboard-page',
   imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent],
@@ -62,6 +63,7 @@ export class DashboardPageComponent {
   isLoading: boolean = true;
   email: string = '';
   name: string = '';
+  initials: string='';
   addTaskAnimation: boolean=false;
   minStartDate = new Date();
   collapsedStatus: { [status: string]: boolean } = {};
@@ -91,7 +93,8 @@ export class DashboardPageComponent {
   async getCurrentUserData() {
     const user = await this.sharedService.getCurrentUser();
     if (user?.user_metadata) {
-      this.name = user.user_metadata?.name;
+      this.initials=getInitials(user.user_metadata?.name);
+      this.name=user.user_metadata?.name;
       this.email = user?.user_metadata.email;
     }
   }
@@ -241,7 +244,6 @@ export class DashboardPageComponent {
     return this.tasks.filter(t => t.status === status);
   }
 
-  // ?????
   updateTaskCounts() {
     this.noOfTaskCount = this.tasks.filter(t => t.status === status).length;
   }

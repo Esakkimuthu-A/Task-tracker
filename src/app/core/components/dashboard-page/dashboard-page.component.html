@@ -11,8 +11,7 @@
   <div class="navbar">
     <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
     <div class="user-profile-details">
-      <img [matMenuTriggerFor]="menu" src="assets/user-avatar.jpg" alt="User Avatar" class="profile-pic"
-        (click)="toggleProfileMenu()" />
+      <div class="avatar" [matMenuTriggerFor]="menu" (click)="toggleProfileMenu()">{{ initials }}</div>
       <button class="add-task-btn" (click)="openDialog()">Add Task</button>
       @if(addTaskAnimation){
         <div class="swipe">
@@ -29,9 +28,6 @@
         </div>
       </div>
       <hr />
-      <!-- <button mat-menu-item>
-        <mat-icon>settings</mat-icon> Settings
-      </button> -->
       <button (click)="logout()" mat-menu-item class="logout-btn">
         <mat-icon>logout</mat-icon> Logout
       </button>
