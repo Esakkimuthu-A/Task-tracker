@@ -1,0 +1,54 @@
+ <div class="navbar">
+    <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
+    <div class="user-profile-details">
+      <div class="avatar" [matMenuTriggerFor]="menu">{{userInitials}}</div>
+      <button class="add-task-btn" (click)="onAddTask()">Add Task</button>
+      @if(addTaskAnimation){
+        <div class="swipe">
+          <div class="hand-icon"></div>
+        </div>
+      }
+    </div>
+    <mat-menu #menu="matMenu">
+      <div class="user-info">
+        <mat-icon class="profile-icon">account_circle</mat-icon>
+        <div>
+          <div class="user-name">{{userName}}</div>
+          <div class="user-email">{{userEmail}}</div>
+        </div>
+      </div>
+      <hr />
+      <button (click)="logout()" mat-menu-item class="logout-btn">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
+  </div>
+
+
+
+
+    <!-- <div class="navbar">
+    <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
+    <div class="user-profile-details">
+      <div class="avatar" [matMenuTriggerFor]="menu" (click)="toggleProfileMenu()">{{ initials }}</div>
+      <button class="add-task-btn" >Add Task</button>
+      @if(addTaskAnimation){
+        <div class="swipe">
+          <div class="hand-icon"></div>
+        </div>
+      }
+    </div>
+    <mat-menu #menu="matMenu">
+      <div class="user-info">
+        <mat-icon class="profile-icon">account_circle</mat-icon>
+        <div>
+          <div class="user-name">{{name}}</div>
+          <div class="user-email">{{email}}</div>
+        </div>
+      </div>
+      <hr />
+      <button (click)="logout()" mat-menu-item class="logout-btn">
+        <mat-icon>logout</mat-icon> Logout
+      </button>
+    </mat-menu>
+  </div> -->

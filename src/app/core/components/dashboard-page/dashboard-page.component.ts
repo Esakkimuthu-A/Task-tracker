@@ -22,9 +22,10 @@ import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loa
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { SharedService } from '../../../shared/services/shared.service';
 import { getInitials } from '../../utilities/user.util';
+import { TopNavbarComponent } from '../../../shared/components/top-navbar/top-navbar.component';
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent, TopNavbarComponent],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -38,7 +39,6 @@ export class DashboardPageComponent {
   taskName: string = '';
   startDate: string = '';
   lastDate: string = '';
-  isProfileMenuOpen = false;
   noOfTaskCount: number = 0;
   addTaskForm !: FormGroup;
   addedLabels: AddLabel[] = [];
@@ -164,9 +164,7 @@ export class DashboardPageComponent {
     }
   }
 
-  toggleProfileMenu() {
-    this.isProfileMenuOpen = !this.isProfileMenuOpen;
-  }
+
 
   addLabel() {
     const selectedValue = this.addTaskForm?.get('selectedLabels')?.value;
@@ -264,25 +262,6 @@ export class DashboardPageComponent {
       userDate.getFullYear() === today.getFullYear();
   }
 
-  // animations
-  onClick(e: MouseEvent): void {
-    const task = e.currentTarget as HTMLElement;
-    const rect = task.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    for (let i = 0; i < 15; i++) {
-      const burst = document.createElement("div");
-      burst.className = "burst";
-      burst.style.left = `${x}px`;
-      burst.style.top = `${y}px`;
-      burst.style.setProperty("--x", `${Math.random() * 200 - 100}px`);
-      burst.style.setProperty("--y", `${Math.random() * 200 - 100}px`);
-      burst.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
-      task.appendChild(burst);
-      setTimeout(() => burst.remove(), 700);
-    }
-  }
-
   moveTaskDialog(taskId: number) {
     this.dialogRef = this.dialog.open(this.moveTasks, {
       width: '300px',
@@ -313,11 +292,6 @@ export class DashboardPageComponent {
     today.setHours(0, 0, 0, 0);
     return date ? date >= today : false;
   };
-
-  async logout() {
-    await this.sharedService.signOut();
-    this.router.navigate(['/login']);
-  }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event | null) {
