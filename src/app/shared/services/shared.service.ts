@@ -230,4 +230,21 @@ async signUpWithGoogle(): Promise<boolean> {
   return false;
 }
 
+  async isAuthenticated(): Promise<boolean> {
+    if (!this.supabase) {
+      console.error('Supabase not initialized');
+      return false;
+    }
+    try {
+      const { data, error } = await this.supabase.auth.getSession();
+      if (error) {
+        throw error;
+      }
+      return !!data.session;
+    } catch (error) {
+      console.error('Error checking authentication:', error);
+      return false;
+    }
+  }
+
 }
