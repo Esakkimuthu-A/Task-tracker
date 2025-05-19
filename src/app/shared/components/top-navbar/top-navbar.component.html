@@ -1,7 +1,14 @@
  <div class="navbar">
     <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
     <div class="user-profile-details">
-      <div class="avatar" [matMenuTriggerFor]="menu">{{userInitials}}</div>
+      @if(imageUrl){
+        <div [matMenuTriggerFor]="menu">
+          <img class="avatar" [src]="imageUrl" (error)="imageUrl = 'assets/default-avatar.jpg'" alt="no-image">
+        </div>
+      }
+      @if(userInitials){
+        <div class="avatar" [matMenuTriggerFor]="menu">{{userInitials}}</div>
+      }
       <button class="add-task-btn" (click)="onAddTask()">Add Task</button>
       @if(addTaskAnimation){
         <div class="swipe">

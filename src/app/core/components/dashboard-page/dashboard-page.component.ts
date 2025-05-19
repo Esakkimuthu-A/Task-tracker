@@ -23,6 +23,7 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
 import { SharedService } from '../../../shared/services/shared.service';
 import { getInitials } from '../../utilities/user.util';
 import { TopNavbarComponent } from '../../../shared/components/top-navbar/top-navbar.component';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-dashboard-page',
   imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent, TopNavbarComponent],
@@ -64,12 +65,13 @@ export class DashboardPageComponent {
   email: string = '';
   name: string = '';
   initials: string='';
+  imageUrl : any;
   addTaskAnimation: boolean=false;
   minStartDate = new Date();
   collapsedStatus: { [status: string]: boolean } = {};
   taskCount: { [key: string]: number } = {};
 
-  constructor(private dialog: MatDialog, private router: Router, private sharedService: SharedService, @Inject(PLATFORM_ID) private platformId: object,) { }
+  constructor(private dialog: MatDialog, private router: Router, private sharedService: SharedService, @Inject(PLATFORM_ID) private platformId: object,private sanitizer: DomSanitizer) { }
 
   ngOnInit() {
     this.addTaskAnimation=false;
@@ -93,9 +95,15 @@ export class DashboardPageComponent {
   async getCurrentUserData() {
     const user = await this.sharedService.getCurrentUser();
     if (user?.user_metadata) {
-      this.initials=getInitials(user.user_metadata?.name);
       this.name=user.user_metadata?.name;
       this.email = user?.user_metadata.email;
+      if(user?.user_metadata?.avatar_url){
+        this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(user?.user_metadata?.avatar_url);
+        console.log(this.imageUrl)
+      }
+      else{
+        this.initials=getInitials(user.user_metadata?.name);
+      }
     }
   }
 

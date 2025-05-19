@@ -8,7 +8,7 @@
 
 <div class="content" *ngIf="!isLoading">
   <!-- Navbar -->
-  <app-top-navbar [addTaskAnimation]="addTaskAnimation" [userInitials]="initials" [userName]="name" [userEmail]="email" (addTaskClicked)="openDialog()"></app-top-navbar>
+  <app-top-navbar [addTaskAnimation]="addTaskAnimation" [userInitials]="initials" [userName]="name" [userEmail]="email" [imageUrl]="imageUrl" (addTaskClicked)="openDialog()"></app-top-navbar>
   <!-- Tasks -->
   <div class="display-task">
     <div class="task-status" id="taskStatus" *ngFor="let details of heading" (drop)="drop($event, details.status)"

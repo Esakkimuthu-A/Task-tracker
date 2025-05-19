@@ -15,6 +15,7 @@ export class TopNavbarComponent {
   @Input() userInitials !: string;
   @Input() userName !: string;
   @Input() userEmail !: string;
+  @Input() imageUrl !: any;
 
   @Output() addTaskClicked = new EventEmitter<void>();
   
