@@ -1,11 +1,5 @@
 <app-skeleton-loader *ngIf="isLoading"></app-skeleton-loader>
 
-<!-- @if(mobileView){
-  <div class="landscape-container">
-    <p class="landscape-alignment">This page is best advised to be viewed in desktop </p>
-  </div>
-} -->
-
 <div class="content" *ngIf="!isLoading">
   <!-- Navbar -->
   <app-top-navbar [addTaskAnimation]="addTaskAnimation" [userInitials]="initials" [userName]="name" [userEmail]="email" [imageUrl]="imageUrl" (addTaskClicked)="openDialog()"></app-top-navbar>
@@ -15,6 +9,7 @@
       (dragover)="allowDrop($event)" [ngStyle]="{
           'border-top': '4px solid ' + details.border_color,
           'max-width': collapsedStatus[details.status] ? '30px' : '400px',
+          'min-width': collapsedStatus[details.status] ? 'auto' : '240px',
           'padding': collapsedStatus[details.status] ? '10px 2px' : '10px'
         }" [ngClass]="{ 'task-expanded': collapsedStatus[details.status] }">
       <!-- Task Heading -->

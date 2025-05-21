@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { CommonModule} from '@angular/common';
 import { HEADING_DETAILS } from '../../constants/to-do-list.constant';
 import { AddLabel, AddTask } from '../../models/to-do-list.model';
 import { NavigationStart, Router } from '@angular/router';
@@ -23,7 +23,7 @@ import { FooterComponent } from '../../../shared/components/footer/footer.compon
 import { SharedService } from '../../../shared/services/shared.service';
 import { getInitials } from '../../utilities/user.util';
 import { TopNavbarComponent } from '../../../shared/components/top-navbar/top-navbar.component';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-dashboard-page',
   imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent, TopNavbarComponent],
@@ -44,7 +44,6 @@ export class DashboardPageComponent {
   addTaskForm !: FormGroup;
   addedLabels: AddLabel[] = [];
   tasks: AddTask[] = [];
-  mobileView: boolean = false;
   taskId: number = 0;
 
   labels: AddLabel[] = [
@@ -82,12 +81,6 @@ export class DashboardPageComponent {
     this.addTaskForm.get('startDate')?.valueChanges.subscribe(() => {
       this.addTaskForm.get('endDate')?.reset();
     });
-    if (isPlatformBrowser(this.platformId)) {
-      const innerWidth = window.innerWidth;
-      if (innerWidth <= 1000) {
-        this.mobileView = true;
-      }
-    }
     this.getCurrentUserData();
     this.getCurrentUserTask();
   }
@@ -300,18 +293,6 @@ export class DashboardPageComponent {
     today.setHours(0, 0, 0, 0);
     return date ? date >= today : false;
   };
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event | null) {
-    if (isPlatformBrowser(this.platformId)) {
-      const innerWidth = event !== null ? (event.target as Window)?.innerWidth : window?.innerWidth;
-      if (innerWidth <= 1000) {
-        this.mobileView = true;
-      } else {
-        this.mobileView = false;
-      }
-    }
-  }
 
   @HostListener('window:popstate')
   onPopState() {
