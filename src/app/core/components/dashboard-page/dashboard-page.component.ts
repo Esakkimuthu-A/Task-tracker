@@ -14,14 +14,14 @@ import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule} from '@angular/common';
 import { HEADING_DETAILS } from '../../constants/to-do-list.constant';
-import { AddLabel, AddTask } from '../../models/to-do-list.model';
+import { AddLabel, AddTask, statusCount } from '../../models/to-do-list.model';
 import { NavigationStart, Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
 import { SnackBarComponent } from '../../../shared/components/snack-bar/snack-bar.component';
 import { SkeletonLoaderComponent } from '../../../shared/components/skeleton-loader/skeleton-loader.component';
 import { FooterComponent } from '../../../shared/components/footer/footer.component';
 import { SharedService } from '../../../shared/services/shared.service';
-import { getInitials } from '../../utilities/user.util';
+import { getInitials, getStatusCounts } from '../../utilities/user.util';
 import { TopNavbarComponent } from '../../../shared/components/top-navbar/top-navbar.component';
 import { DomSanitizer } from '@angular/platform-browser';
 @Component({
@@ -107,6 +107,7 @@ export class DashboardPageComponent {
       if (task?.data?.length) {
         this.addTaskAnimation=false;
         this.tasks = [...task.data].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+        this.sharedService.statusCount.set(getStatusCounts(this.tasks))
         this.isLoading = false;
       }
       else {
@@ -232,6 +233,7 @@ export class DashboardPageComponent {
         const task = await this.sharedService.getUserTasks();
         if (task?.data?.length) {
           this.tasks = [...task.data].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+          this.sharedService.statusCount.set(getStatusCounts(this.tasks))
         }
       }
     } catch (error) {

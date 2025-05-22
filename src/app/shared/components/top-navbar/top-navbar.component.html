@@ -25,37 +25,21 @@
         </div>
       </div>
       <hr />
+      <button mat-menu-item (click)="viewChart()">
+        <mat-icon>bar_chart</mat-icon>View chart
+      </button>
       <button (click)="logout()" mat-menu-item class="logout-btn">
         <mat-icon>logout</mat-icon> Logout
       </button>
     </mat-menu>
   </div>
 
-
-
-
-    <!-- <div class="navbar">
-    <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
-    <div class="user-profile-details">
-      <div class="avatar" [matMenuTriggerFor]="menu" (click)="toggleProfileMenu()">{{ initials }}</div>
-      <button class="add-task-btn" >Add Task</button>
-      @if(addTaskAnimation){
-        <div class="swipe">
-          <div class="hand-icon"></div>
-        </div>
-      }
-    </div>
-    <mat-menu #menu="matMenu">
-      <div class="user-info">
-        <mat-icon class="profile-icon">account_circle</mat-icon>
-        <div>
-          <div class="user-name">{{name}}</div>
-          <div class="user-email">{{email}}</div>
-        </div>
+  <ng-template #chartContent>
+    <div class="dialog-content">
+      <p class="chart-heading">Task Progress Overview</p>
+      <p class="chart-sub-heading">Here's how your tasks are progressing:</p>
+      <div class="chart-content">
+        <canvas baseChart [data]="doughnutChartData" [options]="chartOptions" type="doughnut"></canvas>
       </div>
-      <hr />
-      <button (click)="logout()" mat-menu-item class="logout-btn">
-        <mat-icon>logout</mat-icon> Logout
-      </button>
-    </mat-menu>
-  </div> -->
+    </div>
+  </ng-template>

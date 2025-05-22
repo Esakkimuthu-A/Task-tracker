@@ -1,9 +1,9 @@
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { Inject, Injectable, PLATFORM_ID, signal, WritableSignal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { environment } from '../../environments/environment.development';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
-import { AddTask } from '../../core/models/to-do-list.model';
+import { AddTask, statusCount } from '../../core/models/to-do-list.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,12 @@ export class SharedService {
       this.supabase = createClient(environment.supabase.url, environment.supabase.key);
     }
   }
+
+  public statusCount: WritableSignal<statusCount> = signal({
+    open: 0,
+    inProgress: 0,
+    completed: 0,
+  });
 
   async signUp(email: string, password: string, options: string): Promise<any> {
     try {

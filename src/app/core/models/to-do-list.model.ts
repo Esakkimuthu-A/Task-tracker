@@ -15,3 +15,9 @@ export interface AddLabel{
   color: string; 
   backgroundColor: string;
 }
+
+export interface statusCount{
+  open: number;
+  inProgress: number;
+  completed: number;
+}

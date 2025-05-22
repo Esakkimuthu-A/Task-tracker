@@ -137,6 +137,34 @@
   }
 }
 
+.dialog-content{
+  margin: 30px;
+  height: 100%;
+}
+
+.chart-heading {
+  color: black;
+  margin: 0;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 1.4;
+  font-family: var(--main-font-family);
+}
+
+.chart-sub-heading {
+  font-size: 15px;
+  margin: 6px 0;
+  color: #7f7f7f;
+  line-height: 1.6;
+  font-family: var(--main-font-family);
+}
+
+.chart-content{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
 .burst {
   position: absolute;
   width: 10px;
@@ -175,5 +203,8 @@
   }
   .user-profile-details {
     margin-top: 15px;
+  }
+  .dialog-content{
+    height: 400px !important;
   }
 }

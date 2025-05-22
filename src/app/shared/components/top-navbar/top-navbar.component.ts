@@ -1,12 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, computed, effect, EventEmitter, input, Input, Output, TemplateRef, ViewChild } from '@angular/core';
 import { SharedService } from '../../services/shared.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import { NgChartsModule } from 'ng2-charts';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
+import { ChartConfiguration, ChartData, ChartOptions, ChartType } from 'chart.js';
+import { statusCount } from '../../../core/models/to-do-list.model';
 
 @Component({
+  standalone: true,
   selector: 'app-top-navbar',
-  imports: [MatMenuModule,MatIconModule],
+  imports: [MatMenuModule, MatIconModule, NgChartsModule, MatDialogModule],
   templateUrl: './top-navbar.component.html',
   styleUrl: './top-navbar.component.scss'
 })
@@ -16,10 +22,56 @@ export class TopNavbarComponent {
   @Input() userName !: string;
   @Input() userEmail !: string;
   @Input() imageUrl !: any;
-
   @Output() addTaskClicked = new EventEmitter<void>();
-  
-  constructor(private sharedService: SharedService,private router: Router){}
+  @ViewChild('chartContent') chartContent!: TemplateRef<any>;
+  dialogRef!: MatDialogRef<any>;
+
+  public doughnutChartData: ChartData<'doughnut'> | undefined;
+
+  public doughnutChartType: ChartType = 'doughnut';
+
+  chartOptions: ChartOptions<'doughnut'> = {
+    responsive: true,
+    aspectRatio: 1,
+    cutout: '70%',
+    animation: {
+      animateRotate: true,
+      animateScale: true,
+      duration: 1000,
+      easing: 'easeOutBounce',
+    },
+    plugins: {
+      legend: {
+        position: 'bottom',
+      },
+      tooltip: {
+        callbacks: {
+          label: (context) => `${context.label}: ${context.raw}`,
+        },
+      },
+    },
+  };
+
+  constructor(private sharedService: SharedService, private router: Router, private dialog: MatDialog) {
+    effect(() =>{
+     const count = this.sharedService.statusCount();
+      this.doughnutChartData = {
+        labels: ['Open', 'In Progress', 'Completed'],
+        datasets: [
+          {
+            data: [
+              count.open,
+              count.inProgress,
+              count.completed,
+            ],
+            backgroundColor: ['gray', 'rgb(238, 230, 0)', 'rgb(0, 153, 102)'],
+            hoverOffset: 8,
+            borderWidth: 0,
+          },
+        ],
+      };
+    })
+   }
 
   onClick(e: MouseEvent): void {
     const task = e.currentTarget as HTMLElement;
@@ -39,7 +91,7 @@ export class TopNavbarComponent {
     }
   }
 
-  onAddTask(){
+  onAddTask() {
     this.addTaskClicked.emit();
   }
 
@@ -48,4 +100,10 @@ export class TopNavbarComponent {
     this.router.navigate(['/login']);
   }
 
+  viewChart() {
+    this.dialogRef = this.dialog.open(this.chartContent, {
+      width: '500px',
+      height: '550px'
+    });
+  }
 }
