@@ -9,7 +9,7 @@
       @if(userInitials){
         <div class="avatar" [matMenuTriggerFor]="menu">{{userInitials}}</div>
       }
-      <button class="add-task-btn" (click)="onAddTask()">Add Task</button>
+      <button class="add-task-btn" matTooltip="Add Task (shift + T)" (click)="onAddTask()">Add Task</button>
       @if(addTaskAnimation){
         <div class="swipe">
           <div class="hand-icon"></div>

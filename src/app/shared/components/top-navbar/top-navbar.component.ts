@@ -6,13 +6,14 @@ import { Router } from '@angular/router';
 import { NgChartsModule } from 'ng2-charts';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
-import { ChartConfiguration, ChartData, ChartOptions, ChartType } from 'chart.js';
-import { statusCount } from '../../../core/models/to-do-list.model';
+import { ChartData, ChartOptions, ChartType } from 'chart.js';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { HostListener } from '@angular/core';
 
 @Component({
   standalone: true,
   selector: 'app-top-navbar',
-  imports: [MatMenuModule, MatIconModule, NgChartsModule, MatDialogModule],
+  imports: [MatMenuModule, MatIconModule, NgChartsModule, MatDialogModule, MatTooltipModule],
   templateUrl: './top-navbar.component.html',
   styleUrl: './top-navbar.component.scss'
 })
@@ -37,9 +38,9 @@ export class TopNavbarComponent {
     cutout: '70%',
     animation: {
       animateRotate: true,
-      animateScale: true,
+      animateScale: false,
       duration: 1000,
-      easing: 'easeOutBounce',
+      easing: 'linear',
     },
     plugins: {
       legend: {
@@ -91,6 +92,14 @@ export class TopNavbarComponent {
       burst.style.background = `hsl(${Math.random() * 360}, 100%, 50%)`;
       task.appendChild(burst);
       setTimeout(() => burst.remove(), 700);
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    if (event.shiftKey && event.key.toLowerCase() === 't') {
+      event.preventDefault();
+      this.onAddTask();
     }
   }
 
