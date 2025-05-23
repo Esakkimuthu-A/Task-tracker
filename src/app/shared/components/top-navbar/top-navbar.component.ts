@@ -25,6 +25,7 @@ export class TopNavbarComponent {
   @Output() addTaskClicked = new EventEmitter<void>();
   @ViewChild('chartContent') chartContent!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
+  isValid !: boolean;
 
   public doughnutChartData: ChartData<'doughnut'> | undefined;
 
@@ -55,6 +56,8 @@ export class TopNavbarComponent {
   constructor(private sharedService: SharedService, private router: Router, private dialog: MatDialog) {
     effect(() =>{
      const count = this.sharedService.statusCount();
+     const allZero = Object.values(count).every(val => val === 0);
+     this.isValid = !allZero;
       this.doughnutChartData = {
         labels: ['Open', 'In Progress', 'Completed'],
         datasets: [

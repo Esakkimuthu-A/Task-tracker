@@ -25,9 +25,11 @@
         </div>
       </div>
       <hr />
-      <button mat-menu-item (click)="viewChart()">
-        <mat-icon>bar_chart</mat-icon>View chart
-      </button>
+      @if(isValid){
+        <button mat-menu-item (click)="viewChart()">
+          <mat-icon>bar_chart</mat-icon>View chart
+        </button>
+      }
       <button (click)="logout()" mat-menu-item class="logout-btn">
         <mat-icon>logout</mat-icon> Logout
       </button>
