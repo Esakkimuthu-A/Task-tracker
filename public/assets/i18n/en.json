@@ -30,5 +30,10 @@
     "ADDRESS": "Address",
     "LET_GET_DONE": "Let’s Get Things Done",
     "BE_PRODUCTIVE": "Start your productivity journey with a simple chat. Our team is here to understand your needs and help you stay on top of your tasks. Whether you're managing personal goals or leading a team, we’ll help you track, plan, and deliver—one task at a time."
+  },
+  "PAGE_NOT_FOUND":{
+    "HEADING_TEXT":"Look like you're lost",
+    "SUB_HEADING_TEXT":"The page you are looking for not avaible!",
+    "DASHBOARD_BTN":"Go to Dashboard"
   }
 }
