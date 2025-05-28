@@ -51,8 +51,9 @@
 }
 
 .dialog-btn {
-  height: 35px;
-  width: 90px;
+  // height: 35px;
+  // width: 90px;
+  padding: 10px 15px;
   border-radius: 8px;
   border: none;
   font-size: 15px;
@@ -153,9 +154,14 @@
 }
 
 .task-status-collapse-heading-text {
-  display: flex;
-  justify-content: center;
-  font-weight: 500;
+  // display: flex;
+  // justify-content: center;
+  // font-weight: 500;
+  display: block;
+  text-align: center;
+  line-height: 1.5;
+  font-size: 16px;
+  margin: 2px 0;   
 }
 
 .collapse-design mat-icon {

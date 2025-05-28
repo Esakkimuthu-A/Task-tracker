@@ -9,11 +9,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ChartData, ChartOptions, ChartType } from 'chart.js';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { HostListener } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   standalone: true,
   selector: 'app-top-navbar',
-  imports: [MatMenuModule, MatIconModule, NgChartsModule, MatDialogModule, MatTooltipModule],
+  imports: [MatMenuModule, MatIconModule, NgChartsModule, MatDialogModule, MatTooltipModule, TranslateModule,CommonModule],
   templateUrl: './top-navbar.component.html',
   styleUrl: './top-navbar.component.scss'
 })

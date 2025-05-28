@@ -12,7 +12,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
-import { CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { HEADING_DETAILS } from '../../constants/to-do-list.constant';
 import { AddLabel, AddTask, statusCount } from '../../models/to-do-list.model';
 import { NavigationStart, Router } from '@angular/router';
@@ -24,9 +24,11 @@ import { SharedService } from '../../../shared/services/shared.service';
 import { getInitials, getStatusCounts } from '../../utilities/user.util';
 import { TopNavbarComponent } from '../../../shared/components/top-navbar/top-navbar.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { TranslateModule } from '@ngx-translate/core';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-dashboard-page',
-  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent, TopNavbarComponent],
+  imports: [MatButtonModule, MatFormFieldModule, MatInputModule, MatIconModule, MatDialogModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule, ReactiveFormsModule, FormsModule, MatSelectModule, CommonModule, SkeletonLoaderComponent, SnackBarComponent, FooterComponent, TopNavbarComponent, TranslateModule],
   templateUrl: './dashboard-page.component.html',
   styleUrl: './dashboard-page.component.scss',
   encapsulation: ViewEncapsulation.None
@@ -63,17 +65,17 @@ export class DashboardPageComponent {
   isLoading: boolean = true;
   email: string = '';
   name: string = '';
-  initials: string='';
-  imageUrl : any;
-  addTaskAnimation: boolean=false;
+  initials: string = '';
+  imageUrl: any;
+  addTaskAnimation: boolean = false;
   minStartDate = new Date();
   collapsedStatus: { [status: string]: boolean } = {};
   taskCount: { [key: string]: number } = {};
 
-  constructor(private dialog: MatDialog, private router: Router, private sharedService: SharedService, @Inject(PLATFORM_ID) private platformId: object,private sanitizer: DomSanitizer) { }
+  constructor(private dialog: MatDialog, private router: Router, private sharedService: SharedService, @Inject(PLATFORM_ID) private platformId: object, private sanitizer: DomSanitizer, private translateService: TranslateService) { }
 
   ngOnInit() {
-    this.addTaskAnimation=false;
+    this.addTaskAnimation = false;
     this.formDeclaration();
     this.heading.forEach(item => {
       this.collapsedStatus[item.status] = false;
@@ -88,14 +90,14 @@ export class DashboardPageComponent {
   async getCurrentUserData() {
     const user = await this.sharedService.getCurrentUser();
     if (user?.user_metadata) {
-      this.name=user.user_metadata?.name;
+      this.name = user.user_metadata?.name;
       this.email = user?.user_metadata.email;
-      if(user?.user_metadata?.avatar_url){
+      if (user?.user_metadata?.avatar_url) {
         this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(user?.user_metadata?.avatar_url);
         console.log(this.imageUrl)
       }
-      else{
-        this.initials=getInitials(user.user_metadata?.name);
+      else {
+        this.initials = getInitials(user.user_metadata?.name);
       }
     }
   }
@@ -105,14 +107,14 @@ export class DashboardPageComponent {
       this.isLoading = true;
       const task = await this.sharedService.getUserTasks();
       if (task?.data?.length) {
-        this.addTaskAnimation=false;
+        this.addTaskAnimation = false;
         this.tasks = [...task.data].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
         this.sharedService.statusCount.set(getStatusCounts(this.tasks))
         this.isLoading = false;
       }
       else {
         console.log("Please add your task");
-        this.addTaskAnimation=true;
+        this.addTaskAnimation = true;
         this.isLoading = false;
       }
     } catch (err) {
@@ -153,7 +155,7 @@ export class DashboardPageComponent {
       this.addTaskForm.get('status')?.setValue('open');
       const { task, description, startDate, endDate, selectedLabels, status } = this.addTaskForm.value;
       const data = await this.sharedService.addSupaData(task, description, startDate, endDate, selectedLabels, status);
-      if (data) { 
+      if (data) {
         this.closeDialog();
         this.snackBar.open('check_circle', 'Task added successfully!', 'success');
         this.updateTaskCounts();
@@ -196,7 +198,7 @@ export class DashboardPageComponent {
     if (task) {
       task.status = status;
       this.updateTaskCounts();
-      if(status){
+      if (status) {
         this.updateTimeStamp(task);
         this.updateTaskStatus(task);
         // Once you move your task to 'Completed', it will be automatically deleted after 30 days from that date
@@ -205,7 +207,7 @@ export class DashboardPageComponent {
     }
   }
 
-  async updateTimeStamp(task: any){
+  async updateTimeStamp(task: any) {
     const data = await this.sharedService.completeTask(task);
   }
 
@@ -268,9 +270,18 @@ export class DashboardPageComponent {
   moveTaskDialog(taskId: number) {
     this.dialogRef = this.dialog.open(this.moveTasks, {
       width: '300px',
-      height: '200px'
+      height: '250px'
     });
     this.taskId = taskId;
+  }
+
+  getTranslatedCharacters(key: string): string[] {
+    const translated = this.translateService.instant(key);
+    if ('Segmenter' in Intl) {
+      const segmenter = new Intl.Segmenter('ta', { granularity: 'grapheme' });
+      return Array.from(segmenter.segment(translated), (s: any) => s.segment);
+    }
+    return Array.from(translated);
   }
 
   moveContent(status: any) {

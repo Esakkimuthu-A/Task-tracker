@@ -17,10 +17,10 @@
         <div class="collapse-design" [ngStyle]="{'display':collapsedStatus[details.status] ? 'flow' : 'flex'}">
           <mat-icon id="toggleBtn" (click)="toggleCollapse(details.status)">keyboard_arrow_down</mat-icon>
           <p class="task-status-heading-text" *ngIf="!collapsedStatus[details.status]">
-            {{ details.title }}
+            {{ details.title | translate }}
           </p>
           <div class="vertical-text" *ngIf="collapsedStatus[details.status]">
-            <span *ngFor="let char of details.title.split('')" class="task-status-collapse-heading-text">{{char}}</span>
+            <span *ngFor="let char of getTranslatedCharacters(details.title)" class="task-status-collapse-heading-text">{{char}}</span>
           </div>
         </div>
         <div class="task-count-details" *ngIf="!collapsedStatus[details.status]">
@@ -73,20 +73,20 @@
 <ng-template #taskDialog>
   @if(addTaskForm){
   <div class="dialog-container" [formGroup]="addTaskForm">
-    <h2 class="add-task-heading">Add New Task</h2>
+    <h2 class="add-task-heading">{{'NAVBAR.DIALOG_HEADING' | translate }}</h2>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Enter Task</mat-label>
+      <mat-label>{{'NAVBAR.TASK_LABEL' | translate }}</mat-label>
       <input matInput type="text" formControlName="task" />
       @if(addTaskForm.get('task')?.hasError('required') && addTaskForm.get('task')?.touched){
       <mat-error>This field is required.</mat-error>
       }
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Enter Description</mat-label>
+      <mat-label>{{'NAVBAR.DESCRIPTION_LABEL' | translate }}</mat-label>
       <textarea matInput rows="3" formControlName="description"></textarea>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Start Date</mat-label>
+      <mat-label>{{'NAVBAR.START_DATE' | translate }}</mat-label>
       <input matInput [matDatepicker]="startPicker" [matDatepickerFilter]="startDateFilter" formControlName="startDate" />
       <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
       <mat-datepicker #startPicker></mat-datepicker>
@@ -95,7 +95,7 @@
       }
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Last Date</mat-label>
+      <mat-label>{{'NAVBAR.LAST_DATE' | translate }}</mat-label>
       <input 
         matInput 
         [matDatepicker]="endPicker" 
@@ -110,14 +110,14 @@
     </mat-form-field>
     <div class="full-width" class="labal-select">
       <mat-form-field appearance="outline" style="min-width: 80%;">
-        <mat-label>Select a Label</mat-label>
+        <mat-label>{{'NAVBAR.SELECTED_LABEL' | translate }}</mat-label>
         <mat-select id="labelSelect" formControlName="selectedLabels">
           @for (label of labels; track label) {
           <mat-option [value]="label.value">{{ label.name }}</mat-option>
           }
         </mat-select>
       </mat-form-field>
-      <button style="min-width: 20%;" class="dialog-btn label-add" (click)="addLabel()">Add</button>
+      <button style="min-width: 20%;" class="dialog-btn label-add" (click)="addLabel()">{{'NAVBAR.LABEL_ADD_BTN' | translate }}</button>
     </div>
     <div class="label-container">
       @for (label of addedLabels; track label.value) {
@@ -128,8 +128,8 @@
       }
     </div>
     <div class="dialog-actions">
-      <button class="cancel-btn dialog-btn" (click)="closeDialog()">Close</button>
-      <button class="save-btn dialog-btn" color="primary" (click)="saveTask()">Save</button>
+      <button class="cancel-btn dialog-btn" (click)="closeDialog()">{{'NAVBAR.DIALOG_CLOSE' | translate }}</button>
+      <button class="save-btn dialog-btn" color="primary" (click)="saveTask()">{{'NAVBAR.DIALOG_SAVE' | translate }}</button>
     </div>
   </div>
   }
@@ -138,19 +138,19 @@
 <ng-template #noTasks>
   <div class="no-tasks-container">
     <div class="icon-box">🗂️</div>
-    <h2>No Tasks Found</h2>
-    <p>You're all caught up for now.</p>
-    <a (click)="openDialog()" class="add-task-link">Add Task</a>
+    <h2>{{'DASHBOARD.NO_TASK' | translate }}</h2>
+    <p>{{'DASHBOARD.NO_TASK_MESSAGE' | translate }}</p>
+    <a (click)="openDialog()" class="add-task-link">{{ 'NAVBAR.ADD_TASK_BTN' | translate }}</a>
   </div>
 </ng-template>
 
 <ng-template #moveTasks>
   <div class="container">
-    <p>This dialog shows the current status of the task. You can switch between 'In Progress' and 'Completed'.</p>
+    <p>{{'DASHBOARD.MOVE_TASK' | translate }}</p>
     <div style="display: flex;">
       <div *ngFor="let details of heading">
-        <div *ngIf="details.title !== 'Open'" >
-          <button class="status-btn" [ngStyle]="{backgroundColor:details.border_color,color:details.color }" (click)="moveContent(details?.status)">{{details.title}}</button>
+        <div *ngIf="details.status !== 'open'" >
+          <button class="status-btn" [ngStyle]="{backgroundColor:details.border_color,color:details.color }" (click)="moveContent(details?.status)">{{details.title | translate}}</button>
         </div>
       </div>
     </div>

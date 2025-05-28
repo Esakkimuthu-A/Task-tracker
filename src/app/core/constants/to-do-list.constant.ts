@@ -1,7 +1,7 @@
 export const  HEADING_DETAILS = [
-  { title: 'Open', status: 'open',border_color:'gray',color:'black' },
-  { title: 'In Progress', status: 'inprogress',border_color:'rgb(238, 230, 0)',color:'black' },
-  { title: 'Completed', status: 'completed' ,border_color:'rgb(0, 153, 102)',color:'white'}
+  { title: 'DASHBOARD.OPEN', status: 'open',border_color:'gray',color:'black' },
+  { title: 'DASHBOARD.IN_PROGRESS', status: 'inprogress',border_color:'rgb(238, 230, 0)',color:'black' },
+  { title: 'DASHBOARD.COMPLETED', status: 'completed' ,border_color:'rgb(0, 153, 102)',color:'white'}
 ]
 
 export const SOCIAL_MEDIA_ICONS=[

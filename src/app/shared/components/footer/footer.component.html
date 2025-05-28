@@ -8,22 +8,18 @@
   </div>
   <div class="footer-content">
     <div class="left">
-      <h2>Let’s Get Things Done</h2>
-      <p>
-        Start your productivity journey with a simple chat. Our team is here to understand your needs and help you
-        stay on top of your tasks. Whether you're managing personal goals or leading a team, we’ll help you track,
-        plan, and deliver—one task at a time.
-      </p>
+      <h2>{{'FOOTER.LET_GET_DONE' | translate }}</h2>
+      <p>{{'FOOTER.BE_PRODUCTIVE' | translate }}</p>
     </div>
     <div class="right">
       <div class="email-content">
-        <strong>Email</strong> <a href="mailto:esakkimuthua2002&#64;gmail.com">esakkimuthua2002&#64;gmail.com</a>
+        <strong>{{'FOOTER.EMAIL' | translate }}</strong> <a href="mailto:esakkimuthua2002&#64;gmail.com">esakkimuthua2002&#64;gmail.com</a>
       </div>
       <div class="phone-content">
-        <strong>Phone</strong><a href="tel:+6598735984">(+91) 7339679918</a>
+        <strong>{{'FOOTER.PHONE' | translate }}</strong><a href="tel:+6598735984">(+91) 7339679918</a>
       </div>
       <div class="address-content">
-        <strong>Address</strong>
+        <strong>{{'FOOTER.ADDRESS' | translate }}</strong>
         <a href="https://www.google.co.in/maps/place/Gunaramanallur,+Tamil+Nadu">
           Gunaramanallur, Tenkasi<br>Tamil nadu<br>India
         </a>
@@ -33,6 +29,12 @@
           <a [href]="details.navigateLink" target="_blank">
             <img [src]="details.imageUrl" alt="social-media-icons" class="social-media-image">
           </a>
+        </div>
+        <div class="language-dropdown">
+          <select class="language-simple" [value]="selectedLanguage" (change)="onLanguageChange($event)">
+            <option value="en">EN</option>
+            <!-- <option value="ta">TA</option> -->
+          </select>
         </div>
       </div>
     </div>

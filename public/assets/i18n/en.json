@@ -1,11 +1,34 @@
 {
-  "TASK_TRACKER": "Task Tracker",
-  "LOGOUT": "Logout",
-  "ADD_TASK_BTN":"Add Task",
-  "OPEN":"Open",
-  "IN_PROGRESS":"In Progress",
-  "COMPLETED":"Completed",
-  "Email":"Email",
-  "PHONE":"Phone",
-  "ADDRESS":"Address"
+  "NAVBAR": {
+    "TASK_TRACKER": "Task Tracker",
+    "LOGOUT": "Logout",
+    "VIEW_CHART": "View chart",
+    "PROGRESS_HEADING": "Task Progress Overview",
+    "PROGRESS_SUBHEADING": "Here's how your tasks are progressing:",
+    "ADD_TASK_BTN": "Add Task",
+    "DIALOG_HEADING": "Add New Task",
+    "TASK_LABEL": "Enter Task",
+    "DESCRIPTION_LABEL": "Enter Description",
+    "START_DATE": "Start Date",
+    "LAST_DATE": "Last Date",
+    "SELECTED_LABEL": "Select a Label",
+    "LABEL_ADD_BTN": "Add",
+    "DIALOG_CLOSE": "Close",
+    "DIALOG_SAVE": "Save"
+  },
+  "DASHBOARD": {
+    "OPEN": "Open",
+    "IN_PROGRESS": "In Progress",
+    "COMPLETED": "Completed",
+    "NO_TASK":"No Tasks Found",
+    "NO_TASK_MESSAGE":"You're all caught up for now.",
+    "MOVE_TASK":"This dialog shows the current status of the task. You can switch between 'In Progress' and 'Completed'."
+  },
+  "FOOTER": {
+    "EMAIL": "Email",
+    "PHONE": "Phone",
+    "ADDRESS": "Address",
+    "LET_GET_DONE": "Let’s Get Things Done",
+    "BE_PRODUCTIVE": "Start your productivity journey with a simple chat. Our team is here to understand your needs and help you stay on top of your tasks. Whether you're managing personal goals or leading a team, we’ll help you track, plan, and deliver—one task at a time."
+  }
 }

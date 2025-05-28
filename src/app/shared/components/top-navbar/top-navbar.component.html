@@ -1,5 +1,5 @@
  <div class="navbar">
-    <p class="task-tracker-heading task" (click)="onClick($event)">Task Tracker</p>
+    <p class="task-tracker-heading task" (click)="onClick($event)">{{ 'NAVBAR.TASK_TRACKER' | translate }}</p>
     <div class="user-profile-details">
       @if(imageUrl){
         <div [matMenuTriggerFor]="menu">
@@ -9,7 +9,7 @@
       @if(userInitials){
         <div class="avatar" [matMenuTriggerFor]="menu">{{userInitials}}</div>
       }
-      <button class="add-task-btn" matTooltip="Add Task (shift + T)" (click)="onAddTask()">Add Task</button>
+      <button class="add-task-btn" matTooltip="{{ 'NAVBAR.ADD_TASK_BTN' | translate }} (shift + T)" (click)="onAddTask()">{{ 'NAVBAR.ADD_TASK_BTN' | translate }}</button>
       @if(addTaskAnimation){
         <div class="swipe">
           <div class="hand-icon"></div>
@@ -27,19 +27,19 @@
       <hr />
       @if(isValid){
         <button mat-menu-item (click)="viewChart()">
-          <mat-icon>bar_chart</mat-icon>View chart
+          <mat-icon>bar_chart</mat-icon> {{ 'NAVBAR.VIEW_CHART' | translate }}
         </button>
       }
       <button (click)="logout()" mat-menu-item class="logout-btn">
-        <mat-icon>logout</mat-icon> Logout
+        <mat-icon>logout</mat-icon> {{ 'NAVBAR.LOGOUT' | translate }}
       </button>
     </mat-menu>
   </div>
 
   <ng-template #chartContent>
     <div class="dialog-content">
-      <p class="chart-heading">Task Progress Overview</p>
-      <p class="chart-sub-heading">Here's how your tasks are progressing:</p>
+      <p class="chart-heading">{{ 'NAVBAR.PROGRESS_HEADING' | translate }}</p>
+      <p class="chart-sub-heading">{{ 'NAVBAR.PROGRESS_SUBHEADING' | translate }}</p>
       <div class="chart-content">
         <canvas baseChart [data]="doughnutChartData" [options]="chartOptions" type="doughnut"></canvas>
       </div>
