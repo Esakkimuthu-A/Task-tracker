@@ -13,7 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { CommonModule } from '@angular/common';
-import { HEADING_DETAILS } from '../../constants/to-do-list.constant';
+import { corrections, HEADING_DETAILS } from '../../constants/to-do-list.constant';
 import { AddLabel, AddTask, statusCount } from '../../models/to-do-list.model';
 import { NavigationStart, Router } from '@angular/router';
 import { ViewEncapsulation } from '@angular/core';
@@ -47,6 +47,7 @@ export class DashboardPageComponent {
   addedLabels: AddLabel[] = [];
   tasks: AddTask[] = [];
   taskId: number = 0;
+  userInput = '';
 
   labels: AddLabel[] = [
     { name: 'Bug', value: 'bug', color: 'white', backgroundColor: 'red' },
@@ -89,12 +90,12 @@ export class DashboardPageComponent {
 
   async getCurrentUserData() {
     const user = await this.sharedService.getCurrentUser();
+    console.log(user);
     if (user?.user_metadata) {
       this.name = user.user_metadata?.name;
       this.email = user?.user_metadata.email;
       if (user?.user_metadata?.avatar_url) {
         this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(user?.user_metadata?.avatar_url);
-        console.log(this.imageUrl)
       }
       else {
         this.initials = getInitials(user.user_metadata?.name);
@@ -306,6 +307,14 @@ export class DashboardPageComponent {
     today.setHours(0, 0, 0, 0);
     return date ? date >= today : false;
   };
+
+  autoCorrect() {
+    const words = this.userInput.split(' ');
+    const corrected = words.map(word =>
+     corrections[word.toLowerCase()] || word
+    );
+    this.userInput = corrected.join(' ');
+  }
 
   @HostListener('window:popstate')
   onPopState() {

@@ -83,7 +83,7 @@
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{'NAVBAR.DESCRIPTION_LABEL' | translate }}</mat-label>
-      <textarea matInput rows="3" formControlName="description"></textarea>
+      <textarea matInput rows="3" formControlName="description" [(ngModel)]="userInput" (input)="autoCorrect()"></textarea>
     </mat-form-field>
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>{{'NAVBAR.START_DATE' | translate }}</mat-label>
