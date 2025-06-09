@@ -8,15 +8,12 @@ export class CommonService {
   currentLanguage: WritableSignal<{ languageCode: string }> = signal({ languageCode: 'en' });
 
   constructor(private translate: TranslateService) {
-    effect(() => {
-      const langCode = this.currentLanguage().languageCode;
-      this.initialLoading(langCode);
-    });
-  }
 
-  setLanguage(lang: string) {
-    this.translate.use(lang);
-    this.currentLanguage.set({ languageCode: lang });
+    effect(() => {
+      if (this.currentLanguage()) {
+        this.initialLoading(this.currentLanguage().languageCode);
+      }
+    })
   }
 
   initialLoading(language: string) {

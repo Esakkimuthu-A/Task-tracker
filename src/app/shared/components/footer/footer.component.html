@@ -31,9 +31,9 @@
           </a>
         </div>
         <div class="language-dropdown">
-          <select class="language-simple" [value]="selectedLanguage" (change)="onLanguageChange($event)">
+          <select class="language-simple" [value]="selectedLanguage()" (change)="onLanguageChange($event)">
             <option value="en">EN</option>
-            <!-- <option value="ta">TA</option> -->
+            <option value="ta">TA</option>
           </select>
         </div>
       </div>

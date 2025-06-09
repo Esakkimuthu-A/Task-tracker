@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment.development';
 import { isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { AddTask, statusCount } from '../../core/models/to-do-list.model';
+import { CommonService } from './common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class SharedService {
 
   private supabase!: SupabaseClient;
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, private router:Router) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, private commonService: CommonService) {
     if (isPlatformBrowser(this.platformId)) {
       this.supabase = createClient(environment.supabase.url, environment.supabase.key);
     }
@@ -66,11 +67,11 @@ export class SharedService {
   }
 
   async getCurrentUser(): Promise<any> {
+    this.getCurrentUserDetails();
     if (!this.supabase) {
       console.error('Supabase client not initialized');
       return null;
     }
-
     try {
       const { data, error } = await this.supabase.auth.getUser();
       if (error) {
@@ -79,6 +80,37 @@ export class SharedService {
       return data.user;
     } catch (error) {
       console.error('Error getting current user:', error);
+      throw error;
+    }
+  }
+
+  async getCurrentUserDetails(): Promise<any> {
+    if (!this.supabase) {
+      console.error('Supabase client not initialized');
+      return null;
+    }
+
+    try {
+      const { data: authData, error: authError } = await this.supabase.auth.getUser();
+      if (authError) throw authError;
+      const authUser = authData.user;
+      const userId = authUser?.id;
+      const { data: userData, error: userError } = await this.supabase
+        .from('user')
+        .select('*')
+        .eq('user_id', userId)
+        .single();
+
+      if (userError) throw userError;
+      const combinedUserData = {
+        ...authUser,
+        ...userData,
+      };
+      this.commonService.currentLanguage.set({ languageCode: combinedUserData.language ?? 'en'});
+      // this.commonService.currentLanguage.set({ languageCode: 'ta'});
+      return combinedUserData;
+    } catch (error) {
+      console.error('Error getting user details:', error);
       throw error;
     }
   }
