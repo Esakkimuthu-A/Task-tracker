@@ -34,7 +34,7 @@ import { TranslateService } from '@ngx-translate/core';
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardPageComponent {
-  @ViewChild('taskDialog') taskDialog!: TemplateRef<any>;
+  @ViewChild('taskDialog') taskDialogs!: TemplateRef<string>;
   @ViewChild('snackRef') snackBar!: SnackBarComponent;
   @ViewChild('moveTasks') moveTasks!: TemplateRef<any>;
   dialogRef!: MatDialogRef<any>;
@@ -136,7 +136,7 @@ export class DashboardPageComponent {
   }
 
   openDialog() {
-    this.dialogRef = this.dialog.open(this.taskDialog, {
+    this.dialogRef = this.dialog.open(this.taskDialogs, {
       width: '400px',
       disableClose: true,
       maxHeight: '80vh',
