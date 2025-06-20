@@ -12,8 +12,9 @@ export const authGuard: CanActivateFn = async (route, state) => {
   }
 
   const isLoggedIn = await sharedService.isAuthenticated();
-
+  console.log(isLoggedIn);
   if (!isLoggedIn) {
+    console.log('if')
     router.navigate(['/login'], {
       queryParams: { returnUrl: state.url }
     });

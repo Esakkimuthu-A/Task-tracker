@@ -88,3 +88,53 @@ p {
   margin-right: 5px;
   color:#44474e;
 }
+
+.google-signup-button {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  color: black;
+  border: none;
+  outline: none;
+  border-radius: 4px;
+  padding: 0;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  margin-bottom: 18px;
+  justify-content: center;
+  border: 1px solid black;
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .google-icon-wrapper {
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  span {
+    padding: 10px 20px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+}
+
+.or-content{
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  margin: 0px 0px 18px 0px;
+}

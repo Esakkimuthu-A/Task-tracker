@@ -3,44 +3,46 @@
   <div class="container">
     <form class="signin-form" [formGroup]="signInForm">
       <h2>Welcome back to TaskTracker</h2>
-      <p>Sign in to continue where you left off.</p>
+      <p>Continue with Google</p>
+      <button class="google-signup-button" (click)="signUpWithGoogle()">
+        <div class="google-icon-wrapper">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" />
+        </div>
+        <span>Sign up with Google</span>
+      </button>
+      <p class="or-content">OR</p>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Email</mat-label>
         <input matInput type="email" placeholder="Enter your email" formControlName="email" />
         <mat-icon matSuffix>email</mat-icon>
         @if(signInForm.get('email')?.hasError('required') && signInForm.get('email')?.touched){
-          <mat-error>Email address is required</mat-error>
+        <mat-error>Email address is required</mat-error>
         }
         @if(signInForm.get('email')?.hasError('pattern')){
-          <mat-error>Invalid email address.</mat-error>
+        <mat-error>Invalid email address.</mat-error>
         }
       </mat-form-field>
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Password</mat-label>
-        <input matInput
-               [type]="hidePassword ? 'password' : 'text'"
-               placeholder="Enter your password"
-               formControlName="password" />
-      
-        <button class="password-button" mat-icon-button
-                matSuffix
-                type="button"
-                (click)="hidePassword = !hidePassword"
-                aria-label="Toggle password visibility">
+        <input matInput [type]="hidePassword ? 'password' : 'text'" placeholder="Enter your password"
+          formControlName="password" />
+
+        <button class="password-button" mat-icon-button matSuffix type="button" (click)="hidePassword = !hidePassword"
+          aria-label="Toggle password visibility">
           <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
-      
+
         @if (signInForm.get('password')?.hasError('required') && signInForm.get('password')?.touched) {
-          <mat-error>Password is required</mat-error>
+        <mat-error>Password is required</mat-error>
         }
       </mat-form-field>
       <button mat-raised-button color="primary" class="sign-in-button" (click)="signIn()">
         @if (!loading) {
-          Sign In
+        Sign In
         } @else {
-          <div class="loader"></div>
+        <div class="loader"></div>
         }
-        </button>
+      </button>
       <div class="links">
         <!-- <a href="#">Forgot password?</a> -->
         <a href="new-account">Create account</a>
